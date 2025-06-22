@@ -4,10 +4,10 @@ pragma solidity ^0.8.4;
 import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
 
-contract FrogToken is ERC20, Ownable {
+contract MyToken is ERC20, Ownable {
     uint256 public tokenPrice = 0.001 ether; // Token price (modifiable)
 
-    constructor() ERC20("FrogToken", "FT") Ownable(msg.sender) {
+    constructor() ERC20("MyToken", "FT") Ownable(msg.sender) {
         // Initial mint of 100,000 tokens to the deployer address
         _mint(msg.sender, 100000 * 10 ** decimals());
     }
