@@ -1,0 +1,123 @@
+{% extends "base.html" %}
+
+{% block title %}Discussions - CyberCrypto Security Forum{% endblock %}
+
+{% block content %}
+<div class="container">
+    <section class="categories-section">
+        <div class="categories-header">
+            <h1>Discussion Categories</h1>
+            <p>Explore our diverse range of cybersecurity and cryptography topics</p>
+        </div>
+
+        <div class="categories-grid">
+            {% for category in categories %}
+            <div class="category-card">
+                <div class="category-title">{{ category[1] }}</div>
+                <div class="category-description">{{ category[2] }}</div>
+                <div class="category-footer">
+                    <div class="category-posts">{{ category[3] }} posts</div>
+                    <div class="category-status">Active</div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+
+        <!-- Additional Info Section -->
+        <section class="hero" style="padding: 2rem 0; margin-top: 3rem;">
+            <h2>Forum Guidelines</h2>
+            <div style="text-align: left; max-width: 800px; margin: 0 auto;">
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem; margin-top: 2rem;">
+                    <div>
+                        <h3 style="color: var(--accent-primary); margin-bottom: 1rem;">🤝 Be Respectful</h3>
+                        <p>Treat all members with respect and maintain professional discourse</p>
+                    </div>
+                    <div>
+                        <h3 style="color: var(--accent-primary); margin-bottom: 1rem;">🔍 Stay On Topic</h3>
+                        <p>Keep discussions relevant to cybersecurity and cryptography</p>
+                    </div>
+                    <div>
+                        <h3 style="color: var(--accent-primary); margin-bottom: 1rem;">📚 Share Knowledge</h3>
+                        <p>Contribute valuable insights and help others learn</p>
+                    </div>
+                    <div>
+                        <h3 style="color: var(--accent-primary); margin-bottom: 1rem;">🔒 Protect Privacy</h3>
+                        <p>Never share sensitive information or credentials</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Recent Activity -->
+        <section style="margin-top: 3rem;">
+            <h2 style="text-align: center; margin-bottom: 2rem;">Recent Activity</h2>
+            <div style="background-color: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 10px; padding: 2rem;">
+                <div style="display: grid; gap: 1rem;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; padding: 1rem; background-color: var(--bg-tertiary); border-radius: 5px;">
+                        <div>
+                            <strong style="color: var(--text-primary);">Latest Zero-Day Vulnerabilities Discussion</strong>
+                            <div style="color: var(--text-secondary); font-size: 0.9rem;">in Threat Analysis • 2 hours ago</div>
+                        </div>
+                        <div style="color: var(--accent-primary);">12 replies</div>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; align-items: center; padding: 1rem; background-color: var(--bg-tertiary); border-radius: 5px;">
+                        <div>
+                            <strong style="color: var(--text-primary);">AES vs ChaCha20 Performance Comparison</strong>
+                            <div style="color: var(--text-secondary); font-size: 0.9rem;">in Cryptography • 4 hours ago</div>
+                        </div>
+                        <div style="color: var(--accent-primary);">8 replies</div>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; align-items: center; padding: 1rem; background-color: var(--bg-tertiary); border-radius: 5px;">
+                        <div>
+                            <strong style="color: var(--text-primary);">CISSP Certification Study Tips</strong>
+                            <div style="color: var(--text-secondary); font-size: 0.9rem;">in Career Guidance • 6 hours ago</div>
+                        </div>
+                        <div style="color: var(--accent-primary);">15 replies</div>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; align-items: center; padding: 1rem; background-color: var(--bg-tertiary); border-radius: 5px;">
+                        <div>
+                            <strong style="color: var(--text-primary);">New Nmap Scripting Techniques</strong>
+                            <div style="color: var(--text-secondary); font-size: 0.9rem;">in Tools & Scripts • 8 hours ago</div>
+                        </div>
+                        <div style="color: var(--accent-primary);">6 replies</div>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; align-items: center; padding: 1rem; background-color: var(--bg-tertiary); border-radius: 5px;">
+                        <div>
+                            <strong style="color: var(--text-primary);">Best Cybersecurity Podcasts 2024</strong>
+                            <div style="color: var(--text-secondary); font-size: 0.9rem;">in Learning Resources • 1 day ago</div>
+                        </div>
+                        <div style="color: var(--accent-primary);">23 replies</div>
+                    </div>
+                </div>
+
+                {% if not current_user.is_authenticated %}
+                <div style="text-align: center; margin-top: 2rem; padding: 2rem; border: 1px solid var(--accent-primary); border-radius: 10px; background-color: rgba(0, 196, 180, 0.1);">
+                    <h3 style="color: var(--accent-primary); margin-bottom: 1rem;">Join the Discussion</h3>
+                    <p style="margin-bottom: 1.5rem;">Sign up to participate in discussions and access exclusive content</p>
+                    <a href="{{ url_for('join') }}" class="btn btn-primary" style="margin-right: 1rem;">Join Forum</a>
+                    <a href="{{ url_for('login') }}" class="btn btn-outline">Login</a>
+                </div>
+                {% endif %}
+            </div>
+        </section>
+    </section>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    // Add click handlers for category cards
+    document.addEventListener('DOMContentLoaded', function() {
+        const categoryCards = document.querySelectorAll('.category-card');
+
+        categoryCards.forEach(function(card) {
+            card.style.cursor = 'pointer';
+            card.addEventListener('click', function() {
+                // In a real app, this would navigate to the category page
+                const categoryTitle = this.querySelector('.category-title').textContent;
+                alert('Navigating to ' + categoryTitle + ' discussions...\n\n(This would redirect to the specific category in a full implementation)');
+            });
+        });
+    });
+</script>
+{% endblock %}
